@@ -1,0 +1,4 @@
+Oled display:
+https://components101.com/oled-display-ssd1306
+https://circuitdigest.com/microcontroller-projects/arduino-ssd1306-oled-display
+https://www.14core.com/wiring_the_i2c__spi_oled_monochrome_display_with_raspberrypi/
