@@ -43,6 +43,13 @@
 #include <Wire.h>
 #endif
 
+#include <dht.h>
+
+dht DHT;
+
+#define DHT11_PIN 7
+
+
 /*
   U8glib Example Overview:
     Frame Buffer Examples: clearBuffer/sendBuffer. Fast, but may not work with all Arduino boards because of RAM consumption
@@ -60,14 +67,25 @@ data=*/ 11, /* cs=*/ 10, /* dc=*/ 9, /* reset=*/ 8);
 
 
 void setup(void) {
+  Serial.begin(9600);
   u8g2.begin();
   u8g2.setFont(u8g2_font_profont11_tr);
 }
 
 void loop(void) {
-  static unsigned long thisMicros = 0;
-  static unsigned long lastMicros = 0;
-  static byte i=0;
+
+
+int chk = DHT.read11(DHT11_PIN);
+  //Serial.print("Temperature = ");
+  //Serial.println(DHT.temperature);
+  //Serial.print("Humidity = ");
+  //Serial.println(DHT.humidity);
+  delay(100);
+
+  
+  //static unsigned long thisMicros = 0;
+ // static unsigned long lastMicros = 0;
+  //static byte i=0;
 
   // picture loop
   u8g2.firstPage();
@@ -80,17 +98,21 @@ void loop(void) {
 //    u8g2.drawStr(0,35,"jumps over a lazy ");
 //    u8g2.drawStr(0,42,"dog ");
 
-    u8g2.setCursor( 0,29);
-    u8g2.print(" ");
-    u8g2.print(thisMicros - lastMicros);
-    u8g2.print(" ");
-
-    u8g2.setCursor( 0, 46);
-    u8g2.print( "u8g2xxxx library"); // xxxx makes the same as other test
+    u8g2.setCursor( 5,20);
+    u8g2.print("Humidity: ");
+    //u8g2.print(thisMicros - lastMicros);
+    u8g2.setCursor( 60,20);
+    u8g2.print( DHT.humidity);
+     u8g2.setCursor( 3,40);
+    u8g2.print(" Temp:");
+    u8g2.setCursor( 60,40);
+    u8g2.print( DHT.temperature);  
+   // u8g2.setCursor( 0, 46);
+    //u8g2.print( "u8g2xxxx library"); // xxxx makes the same as other test
 
   } while( u8g2.nextPage() );
 
-  lastMicros = thisMicros;
-  thisMicros = micros();
+  //lastMicros = thisMicros;
+ // thisMicros = micros();
 }
 
